@@ -1,3 +1,6 @@
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+var auto_1 = require("chart.js/auto");
 /*
 * koosta funktsioon, kus antakse ette kahe ainekursuse ainepunktid ja hinded. Arvuta nende põhjal kaalutud keskmine.
 
@@ -55,16 +58,52 @@ function uuendaKaalutudKeskmine() {
 }
 // Kursus on lisatud ja kaalutud keskmine uuendatakse
 function lisaKursus() {
-    const hinne = document.getElementById('hinne').value;
-    const ainepunktid = parseInt(document.getElementById('ainepunktid').value);
-
-    // Kontrollige, kas sisend on korrektne
+    var hinne = document.getElementById('hinne').value;
+    var ainepunktid = parseInt(document.getElementById('ainepunktid').value);
+    // Kontrollime, kas sisend on korrektne
     if (isNaN(ainepunktid) || ainepunktid <= 0) {
         alert("Palun sisesta korrektne ainepunktide arv!");
         return;
     }
-
-    // Lisage kursus ja uuendage kaalutud keskmist
+    // Lisame kursuse
     ainepunktidHindedObjekt.lisaKursus(ainepunktid, hinne);
+    // Kaalutud keskmine uuendamine
     uuendaKaalutudKeskmine();
+    // Uuenda joonistatud diagrammi
+    uuendaDiagramm();
+}
+// Funktsioon, mis uuendab diagrammi, et kuvada iga ainepunktide ja hinde suhet
+function uuendaDiagramm() {
+    var hindedAndAinepunktid = ainepunktidHindedObjekt.kursused.map(function (kursus) {
+        var hinneNumbriks = ainepunktidHindedObjekt["hinneNumbriks"](kursus.hinne); // Privaatne funktsioon
+        return {
+            ainepunktid: kursus.ainepunktid,
+            hinneVäärtus: hinneNumbriks
+        };
+    });
+    var ctx = document.getElementById('diagramm').getContext('2d');
+    if (ctx !== null) {
+        // Kui kontekst on kehtiv, siis loo uus diagramm
+        new auto_1.default(ctx, {
+            type: 'bar',
+            data: {
+                labels: hindedAndAinepunktid.map(function (kursus) { return "".concat(kursus.ainepunktid, " ainepunkti"); }),
+                datasets: [{
+                        label: 'Kursus ja Hinne',
+                        data: hindedAndAinepunktid.map(function (kursus) { return kursus.hinneVäärtus; }),
+                        backgroundColor: 'rgba(75, 192, 192, 0.2)',
+                        borderColor: 'rgba(75, 192, 192, 1)',
+                        borderWidth: 1
+                    }]
+            },
+            options: {
+                responsive: true,
+                scales: {
+                    y: {
+                        beginAtZero: true
+                    }
+                }
+            }
+        });
+    }
 }

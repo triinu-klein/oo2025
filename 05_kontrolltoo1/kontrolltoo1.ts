@@ -1,3 +1,4 @@
+import Chart from 'chart.js/auto';
 /* 
 * koosta funktsioon, kus antakse ette kahe ainekursuse ainepunktid ja hinded. Arvuta nende põhjal kaalutud keskmine.
 
@@ -10,7 +11,7 @@
 
 // Klass, mis hoiab hinnete ja ainepunktide andmeid
 class AinepunktidHinded {
-    private kursused: { ainepunktid: number; hinne: string }[];
+    public kursused: { ainepunktid: number; hinne: string }[];
 
     // Konstruktor, mis võtab vastu kursuste nimekirja
     constructor(kursused: { ainepunktid: number; hinne: string }[]) {
@@ -23,7 +24,7 @@ class AinepunktidHinded {
     }
 
     // Hinde numbriks teisendamise funktsioon
-    private hinneNumbriks(hinne: string): number {
+    public hinneNumbriks(hinne: string): number {
         const hinneteTabel: { [key: string]: number } = {
             "A": 5, "B": 4, "C": 3, "D": 2, "E": 1, "F": 0
         };
@@ -50,7 +51,7 @@ class AinepunktidHinded {
 }
 
 // AinepunktidHinded objekt, kus on kursused koos hinnetega
-const kursused = [
+const kursused: { ainepunktid: number; hinne: string }[] = [
     { ainepunktid: 3, hinne: "A" },
     { ainepunktid: 4, hinne: "B" },
     { ainepunktid: 2, hinne: "C" }
@@ -81,4 +82,44 @@ function lisaKursus() {
 
     // Kaalutud keskmine uuendamine
     uuendaKaalutudKeskmine();
+
+    // Uuenda joonistatud diagrammi
+    uuendaDiagramm();
+}
+
+// Funktsioon, mis uuendab diagrammi, et kuvada iga ainepunktide ja hinde suhet
+function uuendaDiagramm() {
+    const hindedAndAinepunktid = ainepunktidHindedObjekt.kursused.map(kursus => {
+        const hinneNumbriks = ainepunktidHindedObjekt["hinneNumbriks"](kursus.hinne); // Privaatne funktsioon
+        return {
+            ainepunktid: kursus.ainepunktid,
+            hinneVäärtus: hinneNumbriks
+        };
+    });
+
+    const ctx = (document.getElementById('diagramm') as HTMLCanvasElement).getContext('2d');
+    if (ctx !== null) {
+        // Kui kontekst on kehtiv, siis loo uus diagramm
+        new Chart(ctx, {
+            type: 'bar',
+            data: {
+                labels: hindedAndAinepunktid.map(kursus => `${kursus.ainepunktid} ainepunkti`),
+                datasets: [{
+                    label: 'Kursus ja Hinne',
+                    data: hindedAndAinepunktid.map(kursus => kursus.hinneVäärtus),
+                    backgroundColor: 'rgba(75, 192, 192, 0.2)',
+                    borderColor: 'rgba(75, 192, 192, 1)',
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                responsive: true,
+                scales: {
+                    y: {
+                        beginAtZero: true
+                    }
+                }
+            }
+        });
+    }
 }
