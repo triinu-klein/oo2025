@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="et">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ainepunktide ja Hinde Diagramm</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+    <h1>Ainepunktide ja Hinde Arvutamine</h1>
+    <div>
+        <label for="hinne">Hinne (A-F):</label>
+        <input type="text" id="hinne" />
+        <label for="ainepunktid">Ainepunktide arv:</label>
+        <input type="number" id="ainepunktid" />
+        <button onclick="lisaKursus()">Lisa Kursus</button>
+    </div>
+    <div>
+        <h3>Kaalutud Keskmine: <span id="kaalutudKeskmine">0</span></h3>
+    </div>
+    <canvas id="diagramm"></canvas>
+    <script src="kontrolltoo1.js"></script>
+</body>
+</html>

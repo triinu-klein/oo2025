@@ -1,13 +1,4 @@
 import Chart from 'chart.js/auto';
-/* 
-* koosta funktsioon, kus antakse ette kahe ainekursuse ainepunktid ja hinded. Arvuta nende põhjal kaalutud keskmine.
-
-* klassile saab lisada sooritatud ainete hindeid ja ainepunkte, välja küsida nende andmete põhjal parasjagu arvutatud kaalutud keskmins.
-
-* loo kasutajaliides: kasutaja valib hinde (A-F) ja sisestab ainepunktide arvu. Joonisel on näha ainete kaalutud keskmine, 
-    samuti ained ristkülikuna, mille laiuseks on ainepunktide arv ning kõrguseks hinde numbriline väärtus (A-5...F-1). 
-*/ 
-
 
 // Klass, mis hoiab hinnete ja ainepunktide andmeid
 class AinepunktidHinded {
@@ -107,9 +98,12 @@ function uuendaDiagramm() {
                 datasets: [{
                     label: 'Kursus ja Hinne',
                     data: hindedAndAinepunktid.map(kursus => kursus.hinneVäärtus),
-                    backgroundColor: 'rgba(75, 192, 192, 0.2)',
-                    borderColor: 'rgba(75, 192, 192, 1)',
-                    borderWidth: 1
+                    backgroundColor: 'rgba(75, 192, 192, 0.2)', // Täitevärv
+                    borderColor: 'rgba(75, 192, 192, 1)', // Piirjoone värv
+                    borderWidth: 2, // Piirjoone laius
+                    hoverBackgroundColor: 'rgba(75, 192, 192, 0.4)', // Hover täitevärv
+                    hoverBorderColor: 'rgba(75, 192, 192, 1)', // Hover piirjoone värv
+                    hoverBorderWidth: 2
                 }]
             },
             options: {
