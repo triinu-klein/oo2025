@@ -1,4 +1,4 @@
-class Resistor{
+class Resistorr{
     protected r: number;
     protected g;
     constructor(r: number, g:object){

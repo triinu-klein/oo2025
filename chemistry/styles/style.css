@@ -1,0 +1,30 @@
+body {
+    font-family: sans-serif;
+    margin: 2rem;
+  }
+  
+  .formula-input {
+    border: 1px solid #aaa;
+    padding: 10px;
+    min-height: 30px;
+    margin-bottom: 1em;
+  }
+  
+  .chem-keyboard {
+    margin-top: 1em;
+  }
+  
+  .chem-keyboard button {
+    margin: 5px;
+    padding: 6px 10px;
+    font-size: 1em;
+  }
+  
+  button {
+    cursor: pointer;
+  }
+  
+  .question-block {
+    margin-bottom: 2rem;
+  }
+  
