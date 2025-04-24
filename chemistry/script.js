@@ -1,94 +1,93 @@
-// Base Keyboard class
+// Põhiklass Keyboard
 class Keyboard {
-    constructor(targetElement) {
-      this.targetElement = targetElement; // container element where buttons will be added
-      this.buttons = []; // Array to store the button instances
-    }
-  
-    // Method to add a button to the keyboard
-    addButton(symbol, callback) {
-      const button = new KeyboardButton(symbol, callback);
-      this.buttons.push(button);
-      this.targetElement.appendChild(button.render());
-    }
+  constructor(targetElement) {
+    this.targetElement = targetElement; // HTML element, kuhu klahvid lisatakse
+    this.buttons = []; // Massiiv, kuhu salvestatakse kõik loodud nupud
   }
-  
-  // Button class to create each key on the keyboard
-  class KeyboardButton {
-    constructor(symbol, callback) {
-      this.symbol = symbol; // symbol to be displayed on the button
-      this.callback = callback; // function to handle button click
-      this.buttonElement = null;
-    }
-  
-    // Render button and add event listener
-    render() {
-      this.buttonElement = document.createElement('div');
-      this.buttonElement.classList.add('key'); //class for styling
-      this.buttonElement.textContent = this.symbol; //symbol onto the button
-      this.buttonElement.onclick = () => this.callback(this.symbol); // callback on click
-      return this.buttonElement; //return button element
-    }
+
+  // Meetod uue nupu lisamiseks klaviatuurile
+  addButton(symbol, callback) {
+    const button = new KeyboardButton(symbol, callback);
+    this.buttons.push(button); 
+    this.targetElement.appendChild(button.render());
   }
-  
-  // Chemistry Keyboard class extending base Keyboard
-  class ChemistryKeyboard extends Keyboard {
-    constructor(targetElement, inputField) {
-      super(targetElement); // Call the parent class constructor
-      this.inputField = inputField; // Reference to the input field where text will be added
-      this.initializeKeys(); // Initialize the chemistry-specific keys
-    }
-  
-    // Method to initialize the chemistry keys (e.g., H₂O, NaCl, subscripts)
-    initializeKeys() {
-      const symbols = ['→', '⇌', '₁', '₂', '₃', '+', '-', '=', '(', ')'];
-      symbols.forEach(symbol => {
-        this.addButton(symbol, this.addToInputField.bind(this)); // Add each symbol as a button
-      });
-    }
-  
-    // Callback function to add the symbol to the input field
-    addToInputField(symbol) {
-      this.inputField.append(symbol); // Append the clicked symbol to the input field
-    }
+}
+
+// Klass, mis loob iga klaviatuuri klahvi
+class KeyboardButton {
+  constructor(symbol, callback) {
+    this.symbol = symbol; // Klahvil kuvatav sümbol
+    this.callback = callback; // Funktsioon, mis käivitatakse klahvi vajutamisel
+    this.buttonElement = null; // Viide DOM elemendile
   }
-  
-  // Input field class to manage user input
-  class InputField {
-    constructor(inputElement) {
-      this.inputElement = inputElement; // The actual input element on the webpage
-    }
-  
-    // Method to clear the input field
-    clear() {
-      this.inputElement.value = ''; // Clear the content of the input field
-    }
-  
-    // Method to append a value to the input field
-    append(value) {
-      this.inputElement.focus(); // Keeps the input field active
-      this.inputElement.value += value; // Add the value to the existing input
-    }
+
+  // Meetod, mis loob nupu HTML-i ja seob vajutusfunktsiooni
+  render() {
+    this.buttonElement = document.createElement('div');
+    this.buttonElement.classList.add('key'); 
+    this.buttonElement.textContent = this.symbol;
+    this.buttonElement.onclick = () => this.callback(this.symbol); // Klahvi vajutamisel käivitatakse callback
+    return this.buttonElement; // Tagastame DOM elemendi
   }
-  
-  // Main logic to initialize everything
-  window.onload = function () {
-    const inputFieldElement = document.getElementById('inputField'); // The input element where the user types
-    const inputField = new InputField(inputFieldElement); // Create an InputField instance
-  
-    const chemistryKeyboardElement = document.getElementById('chemistryKeyboard'); // The element that will hold the chemistry keyboard
-    const chemistryKeyboard = new ChemistryKeyboard(chemistryKeyboardElement, inputField); // Create the ChemistryKeyboard instance
-  
-    // Show chemistry keyboard on page
-    chemistryKeyboardElement.style.display = 'grid';
-  
-    // For manual keyboard input
-    document.addEventListener('keydown', function (event) {
-      const validKeys = /^[a-zA-Z0-9+\-/*=() ]$/;
-      if (validKeys.test(event.key)) {
-        event.preventDefault(); // Prevent default typing behavior
-        inputField.append(event.key); // Manually append the key
-      }
+}
+
+// Keemiaklaviatuur – laiendab tavalist klaviatuuri klassi
+class ChemistryKeyboard extends Keyboard {
+  constructor(targetElement, inputField) {
+    super(targetElement); // Kutsub välja vanema klassi konstruktori
+    this.inputField = inputField; // Sisestusväli, kuhu sümbolid lisatakse
+    this.initializeKeys(); // Käivitab meetodi keemiasümbolite loomiseks
+  }
+
+  // Meetod, mis lisab keemiaspetsiifilised klahvid
+  initializeKeys() {
+    const symbols = ['→', '⇌', '₁', '₂', '₃', '+', '-', '=', '(', ')']; // Sümbolite loend
+    symbols.forEach(symbol => {
+      this.addButton(symbol, this.addToInputField.bind(this)); //iga sümbol nupuna
     });
-  };
-  
+  }
+
+  // Funktsioon, mis lisab sümboli sisestusvälja
+  addToInputField(symbol) {
+    this.inputField.append(symbol); // Lisab sümboli input-väljale
+  }
+}
+
+// Klass kasutaja sisestusvälja haldamiseks
+class InputField {
+  constructor(inputElement) {
+    this.inputElement = inputElement; // Viide HTML input elemendile
+  }
+
+  // Meetod, mis puhastab sisestusvälja
+  clear() {
+    this.inputElement.value = '';
+  }
+
+  // Meetod väärtuse lisamiseks sisestusväljale
+  append(value) {
+    this.inputElement.focus(); // Hoiab sisestusvälja aktiivsena
+    this.inputElement.value += value; // Lisab sümboli olemasolevale tekstile
+  }
+}
+
+// Peamine loogika, mis käivitub lehe laadimisel
+window.onload = function () {
+  const inputFieldElement = document.getElementById('inputField'); // Leiab sisestusvälja HTML-ist
+  const inputField = new InputField(inputFieldElement); // Loob uue InputField objekti
+
+  const chemistryKeyboardElement = document.getElementById('chemistryKeyboard'); // Leiab keemiaklaviatuuri konteineri
+  const chemistryKeyboard = new ChemistryKeyboard(chemistryKeyboardElement, inputField); // Loob keemiaklaviatuuri
+
+  // Kuvab keemiaklaviatuuri lehel
+  chemistryKeyboardElement.style.display = 'grid';
+
+  // Lisab võimaluse sisestada sümboleid ka füüsilise klaviatuuri kaudu
+  document.addEventListener('keydown', function (event) {
+    const validKeys = /^[a-zA-Z0-9+\-/*=() ]$/; // Lubatud tähemärgid
+    if (validKeys.test(event.key)) {
+      event.preventDefault(); // Keelatud vaikimisi sisestamine
+      inputField.append(event.key); // Lisame vajutatud märgi sisestusväljale
+    }
+  });
+};
