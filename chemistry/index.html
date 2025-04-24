@@ -2,14 +2,28 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <title>Chemistry Test</title>
-  <link rel="stylesheet" href="../styles/style.css" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Chemistry Calculator</title>
+  <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-  <h1>Chemistry Test</h1>
-  <div id="test"></div>
 
-  <!-- Link to compiled TypeScript -->
-  <script type="module" src="../dist/main.js"></script>
+  <!-- Chemistry Calculator -->
+  <h1>Kalkulaator</h1>
+  <input id="inputField" type="text" placeholder="Alusta kirjutamist..." />
+  <div class="keyboard-wrapper" id="chemistryKeyboard"></div>
+
+  <!-- Molecule Drawing Section -->
+  <h2>Joonised</h2>
+  <canvas id="drawingCanvas" width="600" height="200"></canvas>
+  <div class="drawing-keyboard">
+    <button onclick="addShape('line')">Joon</button>
+    <button onclick="addShape('doubleLine')">Topeltjoon</button>
+    <button onclick="addShape('hexagon')">Heksagon</button>
+  </div>
+
+  <!-- Scripts -->
+  <script src="script.js"></script>
+  <script src="script2.js"></script>
 </body>
 </html>
