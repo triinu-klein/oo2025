@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="et">
+<head>
+  <meta charset="UTF-8">
+  <title>Salatiarvutus</title>
+</head>
+<body>
+  <h1>Ceasari salat</h1>
+  <input id="kogus" type="number" value="200" />
+  <button onclick="arvuta()">Arvuta</button>
+
+  <table border="1">
+    <thead>
+      <tr>
+        <th>Koostisosa</th>
+        <th>Kogus (g)</th>
+        <th>Rasv (g)</th>
+        <th>Valgud (g)</th>
+        <th>Süsivesikud (g)</th>
+      </tr>
+    </thead>
+    <tbody id="tabelisisu"></tbody>
+  </table>
+
+  <script>
+    class Toiduaine {
+      constructor(nimetus, rasv, valgud, sysivesikud) {
+        this.nimetus = nimetus;
+        this.rasv = rasv;
+        this.valgud = valgud;
+        this.sysivesikud = sysivesikud;
+      }
+    }
+
+    class Toidukomponent {
+      constructor(toiduaine, kogus) {
+        this.toiduaine = toiduaine;
+        this.kogus = kogus;
+      }
+
+      rasv() {
+        return (this.kogus * this.toiduaine.rasv) / 100;
+      }
+
+      valgud() {
+        return (this.kogus * this.toiduaine.valgud) / 100;
+      }
+
+      sysivesikud() {
+        return (this.kogus * this.toiduaine.sysivesikud) / 100;
+      }
+    }
+
+    const ceasariSalat100g = [
+      new Toidukomponent(new Toiduaine("Kana", 5, 25, 0), 40),
+      new Toidukomponent(new Toiduaine("Salat", 0.4, 1, 1), 30),
+      new Toidukomponent(new Toiduaine("Krutoonid", 10, 9, 50), 20),
+      new Toidukomponent(new Toiduaine("Kaste", 20, 2, 5), 10),
+    ];
+
+    function arvuta() {
+      const sisend = document.getElementById("kogus");
+      const soovitudKogus = parseFloat(sisend.value);
+      const tegur = soovitudKogus / 100;
+
+      const tbody = document.getElementById("tabelisisu");
+      tbody.innerHTML = "";
+
+      for (const komponent of ceasariSalat100g) {
+        const kogus = komponent.kogus * tegur;
+        const rasv = komponent.rasv() * tegur;
+        const valgud = komponent.valgud() * tegur;
+        const sysivesikud = komponent.sysivesikud() * tegur;
+
+        const rida = document.createElement("tr");
+        rida.innerHTML = `
+          <td>${komponent.toiduaine.nimetus}</td>
+          <td>${kogus.toFixed(1)}</td>
+          <td>${rasv.toFixed(1)}</td>
+          <td>${valgud.toFixed(1)}</td>
+          <td>${sysivesikud.toFixed(1)}</td>
+        `;
+        tbody.appendChild(rida);
+      }
+    }
+  </script>
+</body>
+</html>
