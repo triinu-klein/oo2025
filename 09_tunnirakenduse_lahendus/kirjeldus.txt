@@ -1,1 +1,6 @@
 Tunnis ette võetud teemal viimistletud omapoolne rakendus.
+
+Idee: 
+idee on teha meie projekti jaoks vajaliku rakenduse algne versioon, 
+kus saab teha keemia arvutusi/tasakaalustamist ja joonistada molekulaar-skeeme. 
+Seega kaks osa: kalkulaatori osa, kust saab vajalikke sümboleid ja märke sisestada, ning joonistamisala.

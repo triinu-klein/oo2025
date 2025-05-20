@@ -1,0 +1,70 @@
+body {
+  font-family: Arial, sans-serif;
+  text-align: center;
+  margin: 0;
+  padding: 20px;
+  background-color: #f2ecdc;
+}
+
+h1, h2 {
+  margin-bottom: 20px;
+  color: #821b25; /* Headings now red */
+}
+
+#inputField {
+  width: 80%;
+  padding: 10px;
+  margin-bottom: 20px;
+  font-size: 18px;
+  text-align: center;
+  border: 2px solid #b52634;
+  border-radius: 5px;
+}
+
+.keyboard-wrapper {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 10px;
+  justify-items: center;
+  margin-bottom: 30px;
+}
+
+.key {
+  padding: 20px;
+  font-size: 20px;
+  background-color: #b52634;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+  color: white; /* Keyboard text now white */
+}
+
+.key:hover {
+  background-color: #821b25;
+}
+
+canvas {
+  border: 1px solid #b52634;
+  margin-bottom: 15px;
+  background-color: white; /* Canvas background now white */
+}
+
+.drawing-keyboard {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+}
+
+.drawing-keyboard button {
+  padding: 10px 20px;
+  font-size: 16px;
+  border: none;
+  background-color: #b52634;
+  color: white;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.drawing-keyboard button:hover {
+  background-color: #821b25;
+}
